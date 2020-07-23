@@ -4,7 +4,9 @@
 <b>https://viewer.diagrams.net/?title=REST-API.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1eBq1Sq9e72QfEQo9dKgMEwTuZypiMCq3%26export%3Ddownload</b>
 <h2>Параметры</h2>
 <ul>
-<li>app: http://127.0.0.1:80</li>
+<li>app: http://127.0.0.1:80/v1/cars</li>
+<li>{ciD}: http://127.0.0.1:80/v1/cars/5</li>
+<li>app sort: http://127.0.0.1:80/v1/cars?order=year-desc&limit=5&offset=5</li>
 <li>pma: http://127.0.0.1:8183</li>
 <li>mysql: root / secret</li>
 </ul>
