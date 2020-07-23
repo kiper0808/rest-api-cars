@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  #DB MySQL
+  mysql:
+    container_name: rest-api_mysql
+    image: mysql:5.7.31
+    environment:
+      MYSQL_DATABASE: rest-api
+      MYSQL_ROOT_PASSWORD: secret
+    volumes: 
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  
+  #PMA
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: rest_api_pma
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8183:80
+
+  #REST-API APP
+  app:
+    container_name: rest_api_app
+    build:
+      context: ./app
+    ports:
+      - 80:80
+    volumes:
+      - ./app/www:/var/www/rest-api
+      - ./app/logs:/var/log/nginx
+    depends_on:
+      - mysql
