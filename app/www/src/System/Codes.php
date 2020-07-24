@@ -3,54 +3,65 @@
 
 namespace Rest\System;
 
+define('STATUS', 'status');
+define('CODE', 'code');
+define('ID', 'id');
+define('MESSAGE', 'message');
 class Codes {
     public static function getResult(int $code, string $id = null) {
         $result = null;
+        
         switch($code) {
             case 200:
                 $result = json_encode([
-                    'status' => true,
-                    'code' => 200,
-                    'id' => $id,
-                    'message' => 'Object updated'
+                    STATUS => true,
+                    CODE => 200,
+                    ID => $id,
+                    MESSAGE => 'Object updated'
                 ]);
                 break;
             case 201:
                 $result = json_encode([
-                    'status' => true,
-                    'code' => 201,
-                    'id' => $id,
-                    'message' => 'Object created'
+                    STATUS => true,
+                    CODE => 201,
+                    ID => $id,
+                    MESSAGE => 'Object created'
                 ]);
                 break;
             case 400:
                 $result = json_encode([
-                    'status' => false,
-                    'code' => 400,
-                    'message' => 'Data is empty or not full, require: name, year, color'
+                    STATUS => false,
+                    CODE => 400,
+                    MESSAGE => 'Data is empty or not full, require: name, year, color'
                 ]);
                 break;
             case 404:
                 $result = json_encode([
-                    'status' => false,
-                    'code' => 404,
-                    'message' => 'Resource is not found'
+                    STATUS => false,
+                    CODE => 404,
+                    MESSAGE => 'Resource is not found'
                 ]);
                 break;
             case 405:
                 $result = json_encode([
-                    'status' => false,
-                    'code' => 405,
-                    'message' => 'Method Not Allowed'
+                    STATUS => false,
+                    CODE => 405,
+                    MESSAGE => 'Method Not Allowed'
                 ]);
                 break;
             case 500:
                 $result = json_encode([
-                    'status' => false,
-                    'code' => 500,
-                    'message' => 'Internal server error'
+                    STATUS => false,
+                    CODE => 500,
+                    MESSAGE => 'Internal server error'
                 ]);
                 break;
+            default:
+                $result = json_encode([
+                    STATUS => false,
+                    CODE => 000,
+                    MESSAGE => 'Unknown error'
+                ]);
         }
 
         return $result;

@@ -3,15 +3,12 @@
 
 namespace Rest\Action;
 use Rest\System\View;
+use Rest\System\Codes;
 
 class NotFoundAction {
     public function __invoke() {
         header('Content-Type: application/json');
-        echo json_encode([
-            'status' => false,
-            'code' => 404,
-            'message' => 'Resource not found'
-        ]);
-        header("HTTP/1.1 404 Not Found");
+        http_response_code(404);
+            echo Codes::getResult(404);
     }
 }

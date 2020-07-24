@@ -29,7 +29,8 @@ class Cars {
         return $pdo->lastInsertId();
     }
 
-    public static function updateCar(int $id, array $data) {
+    public static function updateCar(int $id, $data) {
+        if(!$data) { return false; } // Guard expression
         $pdo = Database::getConnect();
         $sql = 'SET ';
 
@@ -37,7 +38,7 @@ class Cars {
             $sql .= $key . '=' . ':' . $key . ',';
         }
         
-        $sql = substr($sql,0,-1);;
+        $sql = substr($sql,0,-1);
 
         $statement = $pdo->prepare('UPDATE cars ' . $sql . ' WHERE id = :id');
         
@@ -56,19 +57,17 @@ class Cars {
         
         $statement = $pdo->prepare('DELETE FROM cars WHERE id = :id');
         $statement->bindParam('id',$id);
-        $result = $statement->execute();
-    
-        return $result;
+        return $statement->execute();
     }
 
     public static function getAllCars(array $params) {
         $pdo = Database::getConnect();
         
         // Default params: order = name, offset = 0, limit = 10
-        $params['order'] = $params['order'] === 'year-desc' ? 'year DESC' : $params['order'];
         $order = $params['order'] ?? 'name';
         $limit = $params['limit'] ?? 10;
         $offset = $params['offset'] ?? 0;
+        $order = $order === 'year-desc' ? 'year DESC' : $order;
 
         $sql = 'SELECT * FROM cars ORDER by ' . $order . ' LIMIT ' . $offset . ',' . $limit;
 
@@ -92,8 +91,6 @@ class Cars {
         $statement->bindParam('id', $id);
         $statement->execute();
 
-        $data = $statement->fetch(\PDO::FETCH_ASSOC);
-
-        return $data;
+        return $statement->fetch(\PDO::FETCH_ASSOC);
     }
 }

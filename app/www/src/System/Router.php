@@ -21,7 +21,7 @@ class Router {
     public static function enableRouter($url) {
         $class = new NotFoundAction();
         
-        foreach (self::$routes as $key => $route) {
+        foreach (self::$routes as $route) {
             if (preg_match($route['pattern'], $_SERVER['REQUEST_METHOD'] . $url)) {
                 $class = new $route['class'];
             }
